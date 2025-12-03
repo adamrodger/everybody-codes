@@ -1,4 +1,4 @@
-fn part1(input: &str) -> u32 {
+pub fn part1(input: &str) -> u32 {
     input
         .chars()
         .map(|c| match c {
@@ -10,7 +10,7 @@ fn part1(input: &str) -> u32 {
         .sum()
 }
 
-fn part2(input: &str) -> u32 {
+pub fn part2(input: &str) -> u32 {
     input
         .as_bytes()
         .chunks_exact(2)
@@ -36,7 +36,7 @@ fn part2(input: &str) -> u32 {
         .sum()
 }
 
-fn part3(input: &str) -> u32 {
+pub fn part3(input: &str) -> u32 {
     input
         .as_bytes()
         .chunks_exact(3)
@@ -67,10 +67,13 @@ fn part3(input: &str) -> u32 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::EVENT;
+
+    const QUEST: u32 = 1;
 
     #[test]
     fn test_part1_real() {
-        let input = utils::load_event_input(2024, 1, 1);
+        let input = utils::load_event_input(EVENT, QUEST, 1);
         assert_eq!(part1(&input), 1322);
     }
 
@@ -82,13 +85,13 @@ mod tests {
 
     #[test]
     fn test_part2_real() {
-        let input = utils::load_event_input(2024, 1, 2);
+        let input = utils::load_event_input(EVENT, QUEST, 2);
         assert_eq!(part2(&input), 5584);
     }
 
     #[test]
     fn test_part3_real() {
-        let input = utils::load_event_input(2024, 1, 3);
-        assert_eq!(part3(&input), 5584);
+        let input = utils::load_event_input(EVENT, QUEST, 3);
+        assert_eq!(part3(&input), 27848);
     }
 }
