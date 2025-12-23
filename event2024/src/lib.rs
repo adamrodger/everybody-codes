@@ -3,5 +3,6 @@ pub mod quest02;
 pub mod quest03;
 pub mod quest04;
 pub mod quest05;
+pub mod quest06;
 
 pub const EVENT: u32 = 2024;
