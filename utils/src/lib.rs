@@ -1,3 +1,6 @@
+pub mod graph;
+pub mod grid;
+
 /// Loads the input file for the specified event, quest, and part
 /// from the inputs directory in the workspace root.
 pub fn load_event_input(event: u32, quest: u32, part: u32) -> String {
