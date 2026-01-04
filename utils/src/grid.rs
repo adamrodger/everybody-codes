@@ -1,7 +1,7 @@
 use std::cmp::Ordering;
 use std::convert::Infallible;
 use std::fmt;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
 use std::str::FromStr;
 
 /// A 2D point with signed integer coordinates.
@@ -158,6 +158,74 @@ impl PartialOrd for Point {
 impl Ord for Point {
     fn cmp(&self, other: &Self) -> Ordering {
         self.x.cmp(&other.x).then(self.y.cmp(&other.y))
+    }
+}
+
+/// A simple 3 dimensional point
+///
+/// The y axis doesn't behave like the 2d point because this isn't really used
+/// for indexing into an array or anything
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct Point3D {
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
+}
+
+impl Point3D {
+    pub fn new(x: i32, y: i32, z: i32) -> Self {
+        Self { x, y, z }
+    }
+
+    /// Mahnattan distance from another 3d point
+    pub fn manhattan_distance(&self, other: Point3D) -> u32 {
+        (self.x - other.x).unsigned_abs()
+            + (self.y - other.y).unsigned_abs()
+            + (self.z - other.z).unsigned_abs()
+    }
+
+    /// Return the 6 adjacent points (U, D, L, R, F, B).
+    pub fn neighbours6(&self) -> [Self; 6] {
+        [
+            Self::new(self.x, self.y + 1, self.z), // Up
+            Self::new(self.x, self.y - 1, self.z), // Down
+            Self::new(self.x - 1, self.y, self.z), // Left
+            Self::new(self.x + 1, self.y, self.z), // Right
+            Self::new(self.x, self.y, self.z + 1), // Forward
+            Self::new(self.x, self.y, self.z - 1), // Backwards
+        ]
+    }
+}
+
+impl Add for Point3D {
+    type Output = Point3D;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Point3D {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+            z: self.z + rhs.z,
+        }
+    }
+}
+
+impl AddAssign for Point3D {
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+        self.z += rhs.z;
+    }
+}
+
+impl Mul<i32> for Point3D {
+    type Output = Point3D;
+
+    fn mul(self, rhs: i32) -> Self::Output {
+        Point3D {
+            x: self.x * rhs,
+            y: self.y * rhs,
+            z: self.z * rhs,
+        }
     }
 }
 
