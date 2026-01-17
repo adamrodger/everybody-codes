@@ -3,4 +3,6 @@ resolver = "3"
 members = ["event2024", "utils"]
 
 [workspace.dependencies]
+"itertools" = "0.14"
+num = "0.4"
 "rayon" = "1"
